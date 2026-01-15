@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -25,11 +30,17 @@
                 Simple Chatbot
             </div>
             <div class="card-body">
-                <?php if (isset($_GET['reply'])) { ?>
-                    <div class="alert alert-secondary">
-                        <b>Bot:</b> <?php echo $_GET['reply']; ?>
-                    </div>
-                <?php } ?>
+                <?php
+                if (isset($_SESSION['chat'])) {
+                    foreach ($_SESSION['chat'] as $chat) {
+                        if ($chat['sender'] == 'user') {
+                            echo '<div class="alert alert-primary text-end"><b>Anusara:</b> ' . $chat['message'] . '</div>';
+                        } else {
+                            echo '<div class="alert alert-secondary"><b>Assistant:</b> ' . $chat['message'] . '</div>';
+                        }
+                    }
+                }
+                ?>
 
                 <form action="chatbot.php" method="POST">
                     <div class="input-group">
